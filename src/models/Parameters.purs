@@ -7,7 +7,7 @@ data ParameterCount = Variadic Int | Fixed Int
 eqParameterCountImpl ∷ ParameterCount → ParameterCount → Boolean
 eqParameterCountImpl (Fixed n) (Variadic m) = n >= m
 eqParameterCountImpl (Fixed n) (Fixed    m) = n == m
-eqParameterCountImpl (Variadic _)        _  = true
+eqParameterCountImpl  _         _           = true
 
 instance parameterCountEq ∷ Eq ParameterCount where
   eq = eqParameterCountImpl
