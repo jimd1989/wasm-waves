@@ -1,6 +1,7 @@
 module Models.Parameters where
 
-import Prelude (class Eq, class Show, (<>), (>=), (==), eq, show)
+import Prelude (class Eq, class Show, (<>), (>=), (==), show)
+import Data.Either (Either(..))
 
 data ParameterCount = Variadic Int | Fixed Int
 
@@ -15,3 +16,7 @@ instance parameterCountEq ∷ Eq ParameterCount where
 instance parameterCountShow ∷ Show ParameterCount where
   show (Variadic  n) = show n <> "..∞"
   show (Fixed     n) = show n
+
+toEither ∷ ParameterCount → Either Int Int
+toEither (Variadic n) = Right n
+toEither (Fixed    n) = Left n
