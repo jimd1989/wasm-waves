@@ -29,8 +29,8 @@ compilation ∷ ToCompile → Signature → Compilation
 compilation tc s = {compiled: [], data: tc.data, body: s.body}
 
 push ∷ Bytes → Bytes → Slot → Array Bytes → Procedure → Compilation
-push c d Slot rD rP = {compiled: c <> d, data: rD, body: rP}
-push c d p    rD rP = {compiled: c <> (bytes p), data: [d] <> rD, body: rP}
+push c d Slot rD rP = {compiled: d <> c, data: rD, body: rP}
+push c d p    rD rP = {compiled: (bytes p) <> c, data: [d] <> rD, body: rP}
 
 compile ∷ Compilation → Maybe Bytes
 compile {compiled: co, data: [], body: []} = pure co
