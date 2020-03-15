@@ -1,19 +1,15 @@
 module Actions.Parser where
 
-import Prelude (($), (<>), (*>), (<$>), (<*>), (<<<))
+import Prelude (($), (*>), (<$>), (<<<))
 import Control.Alt ((<|>))
 import Control.Apply (lift2)
 import Control.Lazy (fix)
-import Data.Array (fromFoldable)
-import Data.Either (note)
 import Data.List (singleton)
-import Data.List.Lazy.Types (cons)
-import Data.Number (fromString)
 import Data.Semigroup (append)
 import Data.String.CodeUnits as CU
 import Data.Traversable(class Foldable, foldMap)
 import Global (readFloat)
-import Text.Parsing.StringParser (Parser(..), runParser)
+import Text.Parsing.StringParser (Parser, runParser)
 import Text.Parsing.StringParser.CodePoints (anyDigit, anyLetter, char, 
                                              oneOf, skipSpaces, string)
 import Text.Parsing.StringParser.Combinators (between, many, many1, sepEndBy)
