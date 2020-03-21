@@ -21,6 +21,7 @@ import Models.Slots (Bytes, Skeleton, Slot(..), contents)
 
 compile :: Exp → Either String Bytes
 compile (Num n) = compileNum n
+compile (Ls xs) = compileLs xs
 compile  _      = Left "Internal compiler error. This is not your fault."
 
 compileNum ∷ Number → Either String Bytes
@@ -30,7 +31,7 @@ compileLs ∷ List Exp → Either String Bytes
 compileLs = note err ∘ compile' <=< toCompile
   where
     toCompile = (lift2 ∘ lift2) compilation rawData matched
-    rawData   = join ∘ map (sequence ∘ map compile) ∘ getArgs
+    rawData   = fix \p -> join ∘ map (sequence ∘ map compile) ∘ getArgs
     matched   = liftFork match argCount toMatch
     argCount  = map (Fixed ∘ length) ∘ getArgs
     toMatch   = lookup <=< getName
@@ -53,5 +54,5 @@ compile' {compiled: co, data: da, body: bo} = merge co da bo >>= compile'
   where merge c d b = lift5 push (pure c) (head d) (head b) (tail d) (tail b)
 
 push ∷ Bytes → Bytes → Slot → Array Bytes → Skeleton → Compilation
-push c d Free rD rP = {compiled: d ◇ c, data: rD, body: rP}
+push c d Free rD rP = {compiled: d ◇ c,            data: rD,       body: rP}
 push c d p    rD rP = {compiled: (contents p) ◇ c, data: [d] ◇ rD, body: rP}
