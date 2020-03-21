@@ -1,5 +1,6 @@
 module Models.Compiler where
 
+import Data.Array (reverse)
 import Models.Slots (Bytes, Skeleton)
 
 type Compilation = {
@@ -9,4 +10,4 @@ type Compilation = {
 }
 
 compilation ∷ Array Bytes → Skeleton → Compilation
-compilation b s = {compiled: [], data: b, body: s}
+compilation b s = {compiled: [], data: reverse b, body: s}
