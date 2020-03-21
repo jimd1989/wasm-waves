@@ -15,6 +15,8 @@ split ∷ Signature → Either (Tuple Int Skeleton) (Tuple Int Skeleton)
 split {name: _, args: (Variadic n), body: x} = Right (Tuple n x)
 split {name: _, args: (Fixed    n), body: x} = Left  (Tuple n x)
 
+-- Args are passed to signatures backwards.
+-- >, < etc may be incorrect. Confirm later.
 signatures ∷ Array Signature
 signatures = [
   {name: "f64", args: Fixed 1, body: [Full [68], Free]},

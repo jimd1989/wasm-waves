@@ -45,11 +45,11 @@ lookup x = err $ find (eq x ∘ _.name) signatures
   where err = note $ "Procedure not found: " ◇ x
 
 match ∷ ParameterCount → Signature → Either String Signature
-match x s = if x == s.args
-              then Right s {args = exactArgs x s.args}
-              else Left err
-  where err = "Procedure " ◇ s.name ◇ " expects " ◇ 
-              (show s.args) ◇ " args. Got " ◇ (show x) ◇ "." 
+match x s = if x == a then Right s {args = exactArgs x a} else Left err
+  where
+    a   = s.args
+    err = "Procedure " ◇ s.name ◇ " expects " ◇ 
+          (show s.args) ◇ " args. Got " ◇ (show x) ◇ "." 
 
 exactArgs ∷ ParameterCount → ParameterCount → ParameterCount
 exactArgs (Fixed n) (Variadic _) = (Variadic n)
