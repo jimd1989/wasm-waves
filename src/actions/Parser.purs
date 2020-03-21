@@ -1,6 +1,6 @@
 module Actions.Parser where
 
-import Prelude (($), (*>), (<$>), (<<<))
+import Prelude (($), (*>))
 import Control.Alt ((<|>))
 import Control.Apply (lift2)
 import Control.Lazy (fix)
@@ -14,6 +14,7 @@ import Text.Parsing.StringParser.CodePoints (anyDigit, anyLetter, char,
                                              oneOf, skipSpaces, string)
 import Text.Parsing.StringParser.Combinators (between, many, many1, sepEndBy)
 import Helpers.Combinators ((...))
+import Helpers.Unicode ((∘), (⊙))
 import Models.Exp(Exp(..))
 
 toString ∷ ∀ f. Foldable f ⇒ f Char → String
@@ -27,14 +28,14 @@ parseAtom ∷ Parser Exp
 parseAtom = lift2 atom car cdr
   where
      atom = Atom ... append
-     car  = (toString <<< singleton) <$> (anyLetter <|> symbol)
-     cdr  = toString <$> (many $ anyLetter <|> anyDigit <|> symbol)
+     car  = (toString ∘ singleton) ⊙ (anyLetter <|> symbol)
+     cdr  = toString ⊙ (many $ anyLetter <|> anyDigit <|> symbol)
 
 parseNum ∷ Parser Exp
-parseNum = (Num <<< readFloat <<< toString) <$> (many1 $ char '.' <|> anyDigit)
+parseNum = (Num ∘ readFloat ∘ toString) ⊙ (many1 $ char '.' <|> anyDigit)
 
 parseLs ∷ Parser Exp
-parseLs = parens $ Ls <$> (skipSpaces *> sepEndBy parseExp skipSpaces)
+parseLs = parens $ Ls ⊙ (skipSpaces *> sepEndBy parseExp skipSpaces)
   where parens = between (string "(") (string ")")
 
 parseExp ∷ Parser Exp

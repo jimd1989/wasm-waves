@@ -13,7 +13,8 @@
     "purescript-ordered-collections": "^1.6.1",
     "purescript-numbers": "^7.0.0",
     "purescript-parsing": "^5.0.3",
-    "purescript-string-parsers": "^5.0.0"
+    "purescript-string-parsers": "^5.0.0",
+    "purescript-profunctor": "^4.1.0"
   },
   "devDependencies": {
     "purescript-psci-support": "^4.0.0"
