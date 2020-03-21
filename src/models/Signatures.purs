@@ -1,7 +1,7 @@
 module Models.Signatures where
 
-import Prelude (class Show, ($), show)
 import Data.Either (Either(..))
+import Data.Tuple (Tuple(..))
 import Models.Parameters (ParameterCount(..))
 import Models.Slots (Skeleton, Slot(..))
 
@@ -11,9 +11,9 @@ type Signature = {
   body ∷ Skeleton
 }
 
-split ∷ Signature → Either Skeleton Skeleton
-split {name: _, args: (Variadic _), body: x} = Right x
-split {name: _, args: (Fixed    _), body: x} = Left x
+split ∷ Signature → Either (Tuple Int Skeleton) (Tuple Int Skeleton)
+split {name: _, args: (Variadic n), body: x} = Right (Tuple n x)
+split {name: _, args: (Fixed    n), body: x} = Left  (Tuple n x)
 
 signatures ∷ Array Signature
 signatures = [

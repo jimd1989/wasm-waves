@@ -1,7 +1,6 @@
 module Models.Compiler where
 
 import Models.Slots (Bytes, Skeleton)
-import Models.Signatures (Signature)
 
 type Compilation = {
   compiled ∷ Bytes,
@@ -9,5 +8,5 @@ type Compilation = {
   body ∷ Skeleton
 }
 
-compilation ∷ Array Bytes → Signature → Compilation
-compilation b s = {compiled: [], data: b, body: s.body}
+compilation ∷ Array Bytes → Skeleton → Compilation
+compilation b s = {compiled: [], data: b, body: s}
