@@ -1,9 +1,11 @@
 module Actions.Parser where
 
-import Prelude (($), (*>))
+import Prelude (($), (*>), show)
 import Control.Alt ((<|>))
 import Control.Apply (lift2)
 import Control.Lazy (fix)
+import Data.Bifunctor (lmap)
+import Data.Either (Either)
 import Data.List (singleton)
 import Data.Semigroup (append)
 import Data.String.CodeUnits as CU
@@ -40,3 +42,6 @@ parseLs = parens $ Ls ⊙ (skipSpaces *> sepEndBy parseExp skipSpaces)
 
 parseExp ∷ Parser Exp
 parseExp = fix \p -> skipSpaces *> (parseLs <|> parseAtom <|> parseNum)
+
+parse ∷ String → Either String Exp
+parse = lmap show ∘ runParser parseExp
