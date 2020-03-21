@@ -48,8 +48,7 @@ match ∷ ParameterCount → Signature → Either String Signature
 match x s = if x == a then Right s {args = exactArgs x a} else Left err
   where
     a   = s.args
-    err = "Procedure " ◇ s.name ◇ " expects " ◇ 
-          (show s.args) ◇ " args. Got " ◇ (show x) ◇ "." 
+    err = s.name ◇ " expects " ◇ (show a) ◇ " args. Got " ◇ (show x) ◇ "." 
 
 exactArgs ∷ ParameterCount → ParameterCount → ParameterCount
 exactArgs (Fixed n) (Variadic _) = (Variadic n)
