@@ -6,9 +6,9 @@ import Helpers.Unicode ((◇))
 
 data ParameterCount = Variadic Int | Fixed Int
 
-split ∷ ParameterCount → Either Int Int
-split (Variadic n) = Right n
-split (Fixed    n) = Left  n
+extract ∷ ParameterCount → Either Int Int
+extract (Variadic n) = Right n
+extract (Fixed    n) = Left  n
 
 eqParameterCountImpl ∷ ParameterCount → ParameterCount → Boolean
 eqParameterCountImpl (Fixed n) (Variadic m) = n >= m
