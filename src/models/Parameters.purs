@@ -1,9 +1,14 @@
 module Models.Parameters where
 
 import Prelude (class Eq, class Show, (>=), (==), show)
+import Data.Either (Either(..))
 import Helpers.Unicode ((◇))
 
 data ParameterCount = Variadic Int | Fixed Int
+
+split ∷ ParameterCount → Either Int Int
+split (Variadic n) = Right n
+split (Fixed    n) = Left  n
 
 eqParameterCountImpl ∷ ParameterCount → ParameterCount → Boolean
 eqParameterCountImpl (Fixed n) (Variadic m) = n >= m
