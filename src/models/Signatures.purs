@@ -1,33 +1,39 @@
 module Models.Signatures where
 
-import Data.Either (Either(..))
+import Prelude (($), flip, join)
+import Data.Bifunctor (bimap)
+import Data.Either (Either)
 import Data.Tuple (Tuple(..))
-import Models.Parameters (ParameterCount(..))
-import Models.Slots (Skeleton, Slot(..))
+import Models.Parameters (ParameterCount(..), extract)
+
+type Bytes = Array Int
 
 type Signature = {
   name ∷ String,
   args ∷ ParameterCount,
-  body ∷ Skeleton
+  slots ∷ Array Int,
+  body ∷ Array Bytes
 }
 
-split ∷ Signature → Either (Tuple Int Skeleton) (Tuple Int Skeleton)
-split {name: _, args: (Variadic n), body: x} = Right (Tuple n x)
-split {name: _, args: (Fixed    n), body: x} = Left  (Tuple n x)
+split ∷ Signature → Either (Tuple Int Signature) (Tuple Int Signature)
+split s = join bimap (flip Tuple s) $ extract s.args
 
--- Args are passed to signatures backwards.
--- >, < etc may be incorrect. Confirm later.
+empty ∷ Bytes
+empty = [0]
+
+e ∷ Bytes
+e = empty
+
 signatures ∷ Array Signature
 signatures = [
-  {name: "f64", args: Fixed 1, body: [Full [68], Free]},
-  {name: "+", args: Variadic 2, body: [Full [160]]},
-  {name: "-", args: Variadic 2, body: [Full [161]]},
-  {name: "*", args: Variadic 2, body: [Full [162]]},
-  {name: "/", args: Variadic 2, body: [Full [163]]},
-  {name: "=", args: Fixed 2, body: [Full [97], Free, Free]},
-  {name: "!=", args: Fixed 2, body: [Full [98], Free, Free]},
-  {name: "<", args: Fixed 2, body: [Full [99], Free, Free]},
-  {name: ">", args: Fixed 2, body: [Full [100], Free, Free]},
-  {name: "<=", args: Fixed 2, body: [Full [101], Free, Free]},
-  {name: ">=", args: Fixed 2, body: [Full [102], Free, Free]}
-] 
+  {name: "+", args: Variadic 2, slots: [], body: [[160]]},
+  {name: "-", args: Variadic 2, slots: [], body: [[161]]},
+  {name: "*", args: Variadic 2, slots: [], body: [[162]]},
+  {name: "/", args: Variadic 2, slots: [], body: [[163]]},
+  {name: "=", args: Fixed 2, slots: [0, 1], body: [e, e, [97]]},
+  {name: "!=", args: Fixed 2, slots: [0, 1], body: [e, e, [98]]},
+  {name: "<", args: Fixed 2, slots: [0, 1], body: [e, e, [99]]},
+  {name: ">", args: Fixed 2, slots: [0, 1], body: [e, e, [100]]},
+  {name: "<=", args: Fixed 2, slots: [0, 1], body: [e, e, [101]]},
+  {name: ">=", args: Fixed 2, slots: [0, 1], body: [e, e, [102]]}
+]
