@@ -34,7 +34,6 @@ compileLs = (lift2 ∘ lift2) fill matched rawData
     matched   = expand <=< liftFork match argCount toMatch
     argCount  = map (Fixed ∘ length) ∘ getArgs
     toMatch   = lookup <=< getName
-    err       = "Internal compiler error. This is not your fault."
 
 fill ∷ Signature → Array Bytes → Bytes
 fill s = join ∘ flip updateAtIndices s.body ∘ zip s.slots
