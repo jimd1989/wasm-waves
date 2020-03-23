@@ -21,9 +21,9 @@ import Models.Parameters (ParameterCount(..))
 import Models.Signatures (Bytes, Signature, empty, signatures, split)
 
 compile :: Exp → Either String Bytes
-compile (Num n) = compileNum n
-compile (Ls xs) = compileLs xs
-compile  _      = Left "Internal compiler error. This is not your fault."
+compile (Num  n) = compileNum n
+compile (Ls  xs) = compileLs xs
+compile (Atom x) = Left $ "Invalid argument: " ◇ x
 
 compileNum ∷ Number → Either String Bytes
 compileNum = pure ∘ cons 68 ∘ toBytes
