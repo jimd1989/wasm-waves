@@ -4,7 +4,8 @@ import Prelude ((-), ($), (==), (<#>), (<*>), (<=<), eq, flip, join, map, show)
 import Control.Applicative (pure)
 import Control.Apply (lift2)
 import Control.Lazy (fix)
-import Data.Array ((..), find, head, length, replicate, updateAtIndices, zip)
+import Data.Array ((..), cons, find, head, length, 
+                   replicate, updateAtIndices, zip)
 import Data.List (List)
 import Data.Traversable (sequence)
 import Data.Either (Either(..), note)
@@ -25,7 +26,7 @@ compile (Ls xs) = compileLs xs
 compile  _      = Left "Internal compiler error. This is not your fault."
 
 compileNum ∷ Number → Either String Bytes
-compileNum = pure ∘ append [68] ∘ toBytes
+compileNum = pure ∘ cons 68 ∘ toBytes
 
 compileLs ∷ List Exp → Either String Bytes
 compileLs = (lift2 ∘ lift2) fill matched rawData
