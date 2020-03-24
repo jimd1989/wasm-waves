@@ -15,18 +15,25 @@ import Data.Semigroup (append)
 import Data.Tuple (snd, uncurry)
 import Foreign.Numbers (toBytes)
 import Helpers.Combinators (liftFork)
-import Helpers.Unicode ((◇), (∘))
+import Helpers.Unicode ((◇), (∘), (⊙))
+import Models.Constants (constants)
 import Models.Exp (Exp(..), getArgs, getName)
+import Models.Opcodes (f32const)
 import Models.Parameters (ParameterCount(..))
 import Models.Signatures (Bytes, Signature, empty, signatures, split)
 
 compile :: Exp → Either String Bytes
-compile (Num  n) = compileNum n
-compile (Ls  xs) = compileLs xs
-compile (Atom x) = Left $ "Invalid argument: " ◇ x
+compile (Const x) = compileConst x
+compile (Num   n) = compileNum n
+compile (Ls   xs) = compileLs xs
+compile (Atom  x) = Left $ "Invalid argument: " ◇ x
+
+compileConst ∷ String → Either String Bytes
+compileConst x = err $ _.body ⊙ find (eq x ∘ _.name) constants
+  where err = note $ "Variable not defined: " ◇ x
 
 compileNum ∷ Number → Either String Bytes
-compileNum = pure ∘ cons 68 ∘ toBytes
+compileNum = pure ∘ cons f32const ∘ toBytes
 
 compileLs ∷ List Exp → Either String Bytes
 compileLs = (lift2 ∘ lift2) fill matched rawData

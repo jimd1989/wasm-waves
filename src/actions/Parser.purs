@@ -22,6 +22,7 @@ import Models.Exp(Exp(..))
 toString ∷ ∀ f. Foldable f ⇒ f Char → String
 toString = foldMap CU.singleton
 
+
 symbol ∷ Parser Char
 symbol = oneOf ['!', '#', '$', '%', '&', '|', '*', '+', '-', '/',
                 ':', '<', '=', '>', '?', '@', '^', '_', '~', '"']
@@ -33,6 +34,10 @@ parseAtom = lift2 atom car cdr
      car  = (toString ∘ singleton) ⊙ (anyLetter <|> symbol)
      cdr  = toString ⊙ (many $ anyLetter <|> anyDigit <|> symbol)
 
+parseConst ∷ Parser Exp
+parseConst = Const ⊙
+  (string "x" <|> string "pi" <|> string "e" <|> string "tau")
+
 parseNum ∷ Parser Exp
 parseNum = (Num ∘ readFloat ∘ toString) ⊙ (many1 $ char '.' <|> anyDigit)
 
@@ -41,7 +46,8 @@ parseLs = parens $ Ls ⊙ (skipSpaces *> sepEndBy parseExp skipSpaces)
   where parens = between (string "(") (string ")")
 
 parseExp ∷ Parser Exp
-parseExp = fix \p -> skipSpaces *> (parseLs <|> parseAtom <|> parseNum)
+parseExp = fix \p -> skipSpaces *> 
+  (parseLs <|> parseConst <|> parseAtom <|> parseNum)
 
 parse ∷ String → Either String Exp
 parse = lmap show ∘ runParser parseExp

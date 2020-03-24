@@ -4,6 +4,7 @@ import Prelude (($), flip, join)
 import Data.Bifunctor (bimap)
 import Data.Either (Either)
 import Data.Tuple (Tuple(..))
+import Models.Opcodes
 import Models.Parameters (ParameterCount(..), extract)
 
 type Bytes = Array Int
@@ -26,15 +27,16 @@ e = empty
 
 signatures ∷ Array Signature
 signatures = [
-  {name: "+", args: Variadic 2, slots: [], body: [[160]]},
-  {name: "-", args: Variadic 2, slots: [], body: [[161]]},
-  {name: "*", args: Variadic 2, slots: [], body: [[162]]},
-  {name: "/", args: Variadic 2, slots: [], body: [[163]]},
-  {name: "=", args: Fixed 2, slots: [0,1], body: [e,e,[97]]},
-  {name: "!=", args: Fixed 2, slots: [0,1], body: [e,e,[98]]},
-  {name: "<", args: Fixed 2, slots: [0,1], body: [e,e,[99]]},
-  {name: ">", args: Fixed 2, slots: [0,1], body: [e,e,[100]]},
-  {name: "<=", args: Fixed 2, slots: [0,1], body: [e,e,[101]]},
-  {name: ">=", args: Fixed 2, slots: [0,1], body: [e,e,[102]]},
-  {name: "?", args: Fixed 3, slots: [0,2,4], body: [e,[4,124],e,[5],e,[11]]} 
+  {name: "+", args: Variadic 2, slots: [], body: [[add]]},
+  {name: "-", args: Variadic 2, slots: [], body: [[sub]]},
+  {name: "*", args: Variadic 2, slots: [], body: [[mul]]},
+  {name: "/", args: Variadic 2, slots: [], body: [[div]]},
+  {name: "=", args: Fixed 2, slots: [0,1], body: [e, e, [eq]]},
+  {name: "!=", args: Fixed 2, slots: [0,1], body: [e, e, [ne]]},
+  {name: "<", args: Fixed 2, slots: [0,1], body: [e, e, [lt]]},
+  {name: ">", args: Fixed 2, slots: [0,1], body: [e, e, [gt]]},
+  {name: "<=", args: Fixed 2, slots: [0,1], body: [e, e, [le]]},
+  {name: ">=", args: Fixed 2, slots: [0,1], body: [e, e, [ge]]},
+  {name: "?", args: Fixed 3, slots: [0,2,4],
+   body: [e, [if_, f32], e, [else_], e, [end]]} 
 ]
