@@ -9,6 +9,9 @@ else_ = 5
 end ∷ Int
 end = 11
 
+func ∷ Int
+func = 96
+
 f32 ∷ Int
 f32 = 125
 
