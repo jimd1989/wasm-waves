@@ -1,6 +1,6 @@
 module Actions.Compiler where
 
-import Prelude ((-), ($), (==), (<#>), (<*>), (<=<), eq, flip, join, map, show)
+import Prelude ((-), ($), (==), (<#>), (<*>), eq, flip, join, map, show)
 import Control.Applicative (pure)
 import Control.Apply (lift2)
 import Control.Lazy (fix)
@@ -15,7 +15,7 @@ import Data.Semigroup (append)
 import Data.Tuple (snd, uncurry)
 import Foreign.Numbers (toBytes)
 import Helpers.Combinators (liftFork)
-import Helpers.Unicode ((◇), (∘), (⊙))
+import Helpers.Unicode ((◇), (∘), (⊙), (◁), (◀))
 import Models.Constants (constants)
 import Models.Exp (Exp(..), getArgs, getName)
 import Models.Opcodes (f32const)
@@ -38,10 +38,10 @@ compileNum = pure ∘ cons f32const ∘ toBytes
 compileLs ∷ List Exp → Either String Bytes
 compileLs = (lift2 ∘ lift2) fill matched rawData
   where
-    rawData   = fix \p -> join ∘ map (sequence ∘ map compile) ∘ getArgs
-    matched   = expand <=< liftFork match argCount toMatch
-    argCount  = map (Fixed ∘ length) ∘ getArgs
-    toMatch   = lookup <=< getName
+    rawData   = fix \p -> join ∘ (sequence ∘ map compile) ◁ getArgs
+    matched   = expand ◀ liftFork match argCount toMatch
+    argCount  = (Fixed ∘ length) ◁ getArgs
+    toMatch   = lookup ◀ getName
 
 fill ∷ Signature → Array Bytes → Bytes
 fill s = join ∘ flip updateAtIndices s.body ∘ zip s.slots
@@ -68,6 +68,6 @@ expand' ∷ Int → Signature → Maybe Signature
 expand' n s = body <#> {name: s.name, args: s.args, slots: range, body: _}
   where
     body  = proc s.body <#> slots
-    proc  = append ∘ pure <*> map (replicate (n - 2)) ∘ head
+    proc  = append ∘ pure <*> (replicate (n - 2)) ◁ head
     slots = append (replicate n empty)
     range = 0 .. (n - 1)
