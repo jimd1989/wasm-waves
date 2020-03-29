@@ -44,3 +44,13 @@ Common Haskell operators have been given unicode synonyms in the interest of bre
 | ●      | apply                |
 | ≤      | Less than or equal   |
 | ≥      | Greater than or equal|
+
+## Lacking
+
++ Trig functions
++ Random numbers (for noise)
++ Memory allocation/reading
++ Looping
++ Frontend 
++ Interaction with web audio
++ Tests
