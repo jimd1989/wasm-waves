@@ -44,7 +44,7 @@ compileLs = (lift2 ∘ lift2) fill matched rawData
     toMatch   = lookup ◀ getName
 
 fill ∷ Signature → Array Bytes → Bytes
-fill s = join ∘ flip updateAtIndices s.body ∘ zip s.slots
+fill α = join ∘ flip updateAtIndices α.body ∘ zip α.slots
 
 lookup ∷ String → Either String Signature
 lookup α = err $ find (eq α ∘ _.name) signatures
