@@ -2,7 +2,7 @@ module Models.Headers where
 
 import Prelude (($), flip, join)
 import Control.Apply (lift2)
-import Data.Array (cons, length)
+import Data.Array (cons, length, snoc)
 import Data.Bifunctor (bimap)
 import Data.Enum (fromEnum)
 import Data.Profunctor.Strong ((&&&))
@@ -12,7 +12,7 @@ import Data.String.CodePoints (toCodePointArray)
 import Data.Tuple (uncurry)
 import Helpers.Unicode ((◇), (∘), (◁), (●))
 import Models.Leb128 (leb128)
-import Models.Opcodes (func, f32)
+import Models.Opcodes (func, f32, end)
 import Models.Signatures (Bytes)
 
 type Byte = Int
@@ -60,7 +60,7 @@ fExportType ∷ Byte
 fExportType = 0
 
 fExport ∷ Bytes
-fExport = withLength $ toBytes "f"
+fExport = (withLength $ toBytes "f") ◇ [fExportType, 0]
 
 exports ∷ Header
 exports = header exportsId [fExport]
@@ -68,8 +68,11 @@ exports = header exportsId [fExport]
 codeId ∷ SectionId
 codeId = 10
 
+body ∷ Bytes → Bytes
+body = cons codeId ∘ withLength ∘ cons 1 ∘ withLength ∘ cons 0 ∘ flip snoc end
+
 staticHeader ∷ Header
 staticHeader = magicWord ◇ version ◇ signatures ◇ functionTypes ◇ exports
 
 appendHeader ∷ Bytes → Bytes
-appendHeader = append staticHeader ∘ cons codeId ∘ withLength ∘ cons 1
+appendHeader = append staticHeader ∘ body
