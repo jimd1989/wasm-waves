@@ -1,23 +1,23 @@
 module Models.Parameters where
 
-import Prelude (class Eq, class Show, (>=), (==), show)
+import Prelude (class Eq, class Show, (==), show)
 import Data.Either (Either(..))
-import Helpers.Unicode ((◇))
+import Helpers.Unicode ((◇), (≥))
 
 data ParameterCount = Variadic Int | Fixed Int
 
 extract ∷ ParameterCount → Either Int Int
-extract (Variadic n) = Right n
-extract (Fixed    n) = Left  n
+extract (Variadic α) = Right α
+extract (Fixed    α) = Left  α
 
 eqParameterCountImpl ∷ ParameterCount → ParameterCount → Boolean
-eqParameterCountImpl (Fixed n) (Variadic m) = n >= m
-eqParameterCountImpl (Fixed n) (Fixed    m) = n == m
+eqParameterCountImpl (Fixed α) (Variadic ω) = α ≥ ω
+eqParameterCountImpl (Fixed α) (Fixed    ω) = α == ω
 eqParameterCountImpl  _         _           = true
 
 instance parameterCountEq ∷ Eq ParameterCount where
   eq = eqParameterCountImpl
 
 instance parameterCountShow ∷ Show ParameterCount where
-  show (Variadic  n) = show n ◇ " ‥ ∞"
-  show (Fixed     n) = show n
+  show (Variadic  α) = show α ◇ " ‥ ∞"
+  show (Fixed     α) = show α

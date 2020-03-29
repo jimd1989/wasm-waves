@@ -1,27 +1,27 @@
 module Models.Exp where
 
-import Prelude (class Show, (<=<), map, show)
+import Prelude (class Show, show)
 import Data.Array (fromFoldable)
 import Data.Either (Either(..), note)
 import Data.List (List, head, tail)
-import Helpers.Unicode ((∘))
+import Helpers.Unicode ((∘), (◁), (◀))
 
 data Exp = Const String | Atom String | Ls (List Exp) | Num Number
 
 instance showExp ∷ Show Exp where
-  show (Const a) = a
-  show (Atom  a) = a
-  show (Ls   as) = show as
-  show (Num   n) = show n
+  show (Const α) = α
+  show (Atom  α) = α
+  show (Ls    α) = show α
+  show (Num   α) = show α
 
 getAtom ∷ Exp → Either String String
-getAtom (Atom s) = Right s
+getAtom (Atom α) = Right α
 getAtom _        = Left "Head of expression is not a symbol."
 
 getName ∷ List Exp → Either String String
-getName = getAtom <=< note err ∘ head
+getName = getAtom ◀ note err ∘ head
   where err = "Empty expression."
 
 getArgs ∷ List Exp → Either String (Array Exp)
-getArgs = note err ∘ map fromFoldable ∘ tail
+getArgs = note err ∘ fromFoldable ◁ tail
   where err = "Malformed arguments to expression."

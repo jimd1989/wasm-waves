@@ -1,6 +1,6 @@
 module Models.Headers where
 
-import Prelude (($), (<*>), flip, join)
+import Prelude (($), flip, join)
 import Control.Apply (lift2)
 import Data.Array (cons, length)
 import Data.Bifunctor (bimap)
@@ -10,7 +10,7 @@ import Data.Semigroup (append)
 import Data.Semiring (add)
 import Data.String.CodePoints (toCodePointArray)
 import Data.Tuple (uncurry)
-import Helpers.Unicode ((◇), (∘), (◁))
+import Helpers.Unicode ((◇), (∘), (◁), (●))
 import Models.Leb128 (leb128)
 import Models.Opcodes (func, f32)
 import Models.Signatures (Bytes)
@@ -20,7 +20,7 @@ type SectionId = Int
 type Header = Array Int
 
 header ∷ SectionId → Array Bytes → Header
-header id = cons id ∘ section ∘ itemCount
+header α = cons α ∘ section ∘ itemCount
   where
     itemCount     = leb128 ∘ length &&& join
     sectionLength = leb128 ∘ uncurry add ∘ join bimap length
@@ -30,7 +30,7 @@ toBytes ∷ String → Bytes
 toBytes = fromEnum ◁ toCodePointArray
 
 withLength ∷ Bytes → Bytes
-withLength = flip append <*> leb128 ∘ length
+withLength = flip append ● leb128 ∘ length
 
 magicWord ∷ Bytes
 magicWord = [0, 97, 115, 109]

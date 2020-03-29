@@ -22,7 +22,6 @@ import Models.Exp(Exp(..))
 toString ∷ ∀ f. Foldable f ⇒ f Char → String
 toString = foldMap CU.singleton
 
-
 symbol ∷ Parser Char
 symbol = oneOf ['!', '#', '$', '%', '&', '|', '*', '+', '-', '/',
                 ':', '<', '=', '>', '?', '@', '^', '_', '~', '"']
