@@ -15,12 +15,13 @@ import Data.Semigroup (append)
 import Data.Tuple (snd, uncurry)
 import Foreign.Numbers (toBytes)
 import Helpers.Combinators (liftFork)
+import Helpers.Types (Bytes)
 import Helpers.Unicode ((◇), (∘), (⊙), (◁), (◀), (⊖), (●))
 import Models.Constants (constants)
 import Models.Exp (Exp(..), getArgs, getName)
-import Models.Opcodes (f32const)
 import Models.Parameters (ParameterCount(..))
-import Models.Signatures (Bytes, Signature, empty, signatures, split)
+import Models.Signatures (Signature, empty, signatures, split)
+import Models.Wasm.Codes.Operations (f32const)
 
 compile :: Exp → Either String Bytes
 compile (Const α) = compileConst α

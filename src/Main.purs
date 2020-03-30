@@ -6,12 +6,12 @@ import Effect (Effect)
 import Effect.Console (log)
 import Actions.Compiler (compile)
 import Actions.Parser (parse)
+import Helpers.Types (Bytes)
 import Helpers.Unicode ((◁), (◀))
-import Models.Headers (appendHeader)
-import Models.Signatures (Bytes)
+import Models.Wasm.Sections.Main (header)
 
 wasm ∷ String → Either String Bytes
-wasm = appendHeader ◁ compile ◀ parse 
+wasm = header ◁ compile ◀ parse 
 
 main :: Effect Unit
 main = do

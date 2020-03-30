@@ -4,10 +4,12 @@ import Prelude (($), flip, join)
 import Data.Bifunctor (bimap)
 import Data.Either (Either)
 import Data.Tuple (Tuple(..))
-import Models.Opcodes
+import Helpers.Types (Bytes)
+import Helpers.Unicode ((∘), (●))
 import Models.Parameters (ParameterCount(..), extract)
-
-type Bytes = Array Int
+import Models.Wasm.Codes.Control
+import Models.Wasm.Codes.Operations
+import Models.Wasm.Codes.Types (f32)
 
 type Signature = {
   name ∷ String,
@@ -38,5 +40,5 @@ signatures = [
   {name: "<=", args: Fixed 2, slots: [0,1], body: [e, e, [le]]},
   {name: ">=", args: Fixed 2, slots: [0,1], body: [e, e, [ge]]},
   {name: "?", args: Fixed 3, slots: [0,2,4],
-   body: [e, [if_, f32], e, [else_], e, [end]]} 
+   body: [e, [if', f32], e, [else'], e, [end]]} 
 ]

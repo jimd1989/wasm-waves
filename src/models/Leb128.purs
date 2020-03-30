@@ -2,7 +2,7 @@ module Models.Leb128 where
 
 import Data.Array ((:))
 import Data.Int.Bits ((.&.), (.|.), shr)
-import Models.Signatures (Bytes)
+import Helpers.Types (Bytes)
 import Helpers.Unicode ((≤))
 
 leb128 ∷ Int → Bytes
