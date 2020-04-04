@@ -5,10 +5,9 @@ import Data.Bifunctor (bimap)
 import Data.Either (Either)
 import Data.Tuple (Tuple(..))
 import Helpers.Types (Bytes)
-import Helpers.Unicode ((∘), (●))
 import Models.Parameters (ParameterCount(..), extract)
-import Models.Wasm.Codes.Control
-import Models.Wasm.Codes.Operations
+import Models.Wasm.Codes.Control (if', else', end)
+import Models.Wasm.Codes.Operations (add, div, eq, ge, gt, le, lt, mul, ne,sub)
 import Models.Wasm.Codes.Types (f32)
 
 type Signature = {
@@ -19,7 +18,7 @@ type Signature = {
 }
 
 split ∷ Signature → Either (Tuple Int Signature) (Tuple Int Signature)
-split s = join bimap (flip Tuple s) $ extract s.args
+split α = join bimap (flip Tuple α) $ extract α.args
 
 empty ∷ Bytes
 empty = [0]

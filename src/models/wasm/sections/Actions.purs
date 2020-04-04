@@ -11,7 +11,7 @@ import Data.Semiring (add)
 import Data.String.CodePoints (toCodePointArray)
 import Data.Tuple (uncurry)
 import Helpers.Types (Byte, Bytes)
-import Helpers.Unicode ((◇), (∘), (◁), (●))
+import Helpers.Unicode ((∘), (◁), (●))
 import Models.Leb128 (leb128)
 
 header ∷ Byte → Array Bytes → Bytes

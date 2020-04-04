@@ -2,6 +2,9 @@ module Models.Wasm.Codes.Operations where
 
 import Helpers.Types (Byte)
 
+i32const ∷ Byte
+i32const = 65
+
 f32const ∷ Byte
 f32const = 67
 

@@ -2,6 +2,9 @@ module Models.Wasm.Codes.Control where
 
 import Helpers.Types (Byte)
 
+loop ∷ Byte
+loop = 3
+
 if' ∷ Byte
 if' = 4
 

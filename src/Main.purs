@@ -1,17 +1,19 @@
 module Main where
 
+import Prelude (identity, show)
 import Data.Either (Either)
+import Data.Profunctor.Choice (fanin)
 import Data.Unit (Unit)
 import Effect (Effect)
 import Effect.Console (log)
 import Actions.Compiler (compile)
 import Actions.Parser (parse)
 import Helpers.Types (Bytes)
-import Helpers.Unicode ((◁), (◀))
+import Helpers.Unicode ((∘), (◁), (◀))
 import Models.Wasm.Sections.Main (header)
 
-wasm ∷ String → Either String Bytes
-wasm = header ◁ compile ◀ parse 
+wasm ∷ String → String
+wasm = fanin identity show ∘ (header ◁ compile ◀ parse)
 
 main :: Effect Unit
 main = do
