@@ -1,6 +1,7 @@
 (module
   (global $phase (mut f32) (f32.const 0))
   (global $len i32 (i32.const 3840))
+  (global $tau f32 (f32.const 6.2831853071795864769252))
   (memory $mem 1 1)
   (func $fmod (param $x f32) (param $y f32) (result f32)
     get_local $x
@@ -25,6 +26,14 @@
     get_local $p
     get_local $inc
     f32.add
+    get_global $tau
+    f32.div
+    tee_local $p
+    get_local $p
+    f32.floor
+    f32.sub
+    get_global $tau
+    f32.mul
     tee_local $p
     f32.store
     i32.const 4
