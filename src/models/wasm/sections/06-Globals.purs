@@ -1,5 +1,6 @@
 module Models.Wasm.Sections.Globals where
 
+import Math (tau)
 import Foreign.Numbers (toBytes)
 import Helpers.Types (Byte, Bytes)
 import Helpers.Unicode ((◇))
@@ -24,5 +25,8 @@ phase = [f32, mutable, f32const] ◇ (toBytes 0.0) ◇ [end]
 bufferLen ∷ Bytes
 bufferLen = [i32, immutable, i32const] ◇ (leb128 3840) ◇ [end]
 
+tau' ∷ Bytes
+tau' = [f32, immutable, f32const] ◇ (toBytes tau) ◇ [end]
+
 globals ∷ Bytes
-globals = header id [phase, bufferLen]
+globals = header id [phase, bufferLen, tau']
