@@ -16,3 +16,6 @@ function = 96
 
 f32 ∷ Byte
 f32 = 125
+
+i32 ∷ Byte
+i32 = 127

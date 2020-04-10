@@ -2,7 +2,7 @@
   (global $phase (mut f32) (f32.const 0))
   (global $len i32 (i32.const 3840))
   (memory $mem 1 1)
-  (func $f
+  (func $f (param $inc f32)
     (local $p f32) (local $n i32)
   get_global $phase
   set_local $p
@@ -12,7 +12,7 @@
     get_local $n
     get_local $n
     get_local $p
-    f32.const 0.5
+    get_local $inc
     f32.add
     tee_local $p
     f32.store

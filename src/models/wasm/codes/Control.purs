@@ -14,5 +14,5 @@ else' = 5
 end ∷ Byte
 end = 11
 
-var ∷ Int
-var = 32
+brIf ∷ Byte
+brIf = 13

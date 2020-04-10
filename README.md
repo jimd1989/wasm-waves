@@ -54,7 +54,6 @@ Common Haskell operators have been given unicode synonyms in the interest of bre
 
 + Trig functions
 + Random numbers (for noise)
-+ Memory allocation/reading
 + Looping
 + Frontend 
 + Interaction with web audio

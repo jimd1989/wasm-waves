@@ -37,3 +37,6 @@ gt = 94
 
 ge ∷ Byte
 ge = 96
+
+i32ltu ∷ Byte
+i32ltu = 73
