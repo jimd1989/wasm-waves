@@ -6,7 +6,6 @@ import Data.Semigroup (append)
 import Helpers.Types (Byte, Bytes)
 import Helpers.Unicode ((∘))
 import Models.Wasm.Codes.Types (f32, i32)
-import Models.Wasm.Procedures.Main (main)
 import Models.Wasm.Sections.Actions (withLength)
 
 id ∷ Byte
@@ -22,4 +21,4 @@ localVars ∷ Bytes
 localVars = join [[2], localFloats, localInts]
 
 code ∷ Bytes → Bytes
-code = cons id ∘ withLength ∘ cons 1 ∘ withLength ∘ append localVars ∘ main
+code = cons id ∘ withLength ∘ cons 1 ∘ withLength ∘ append localVars

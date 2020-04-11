@@ -6,12 +6,13 @@ import Data.Unit (Unit)
 import Effect (Effect)
 import Effect.Console (log)
 import Actions.Compiler (compile)
+import Actions.Main (main')
 import Actions.Parser (parse)
 import Helpers.Unicode ((∘), (◁), (◀))
 import Models.Wasm.Sections.Main (header)
 
 wasm ∷ String → String
-wasm = fanin identity show ∘ (header ◁ compile ◀ parse)
+wasm = fanin identity show ∘ (header ◁ main' ◁ compile ◀ parse)
 
 main :: Effect Unit
 main = do

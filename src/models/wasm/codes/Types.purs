@@ -19,3 +19,6 @@ f32 = 125
 
 i32 ∷ Byte
 i32 = 127
+
+emptyBlock ∷ Byte
+emptyBlock = 64
