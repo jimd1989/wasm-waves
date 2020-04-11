@@ -45,7 +45,7 @@ parseLs = parens $ Ls ⊙ (skipSpaces *> sepEndBy parseExp skipSpaces)
   where parens = between (string "(") (string ")")
 
 parseExp ∷ Parser Exp
-parseExp = fix \p -> skipSpaces *> 
+parseExp = fix \α -> skipSpaces *> 
   (parseLs <|> parseConst <|> parseAtom <|> parseNum)
 
 parse ∷ String → Either String Exp
