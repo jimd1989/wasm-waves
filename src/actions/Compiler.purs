@@ -39,10 +39,10 @@ compileNum = pure ∘ cons f32const ∘ toBytes
 compileLs ∷ List Exp → Either String Bytes
 compileLs = (lift2 ∘ lift2) fill matched rawData
   where
-    rawData   = fix \α -> join ∘ (sequence ∘ map compile) ◁ getArgs
-    matched   = expand ◀ liftFork match argCount toMatch
-    argCount  = (Fixed ∘ length) ◁ getArgs
-    toMatch   = lookup ◀ getName
+    rawData  = fix \α -> join ∘ (sequence ∘ map compile) ◁ getArgs
+    matched  = expand ◀ liftFork match argCount toMatch
+    argCount = (Fixed ∘ length) ◁ getArgs
+    toMatch  = lookup ◀ getName
 
 fill ∷ Signature → Array Bytes → Bytes
 fill α = join ∘ flip updateAtIndices α.body ∘ zip α.slots
