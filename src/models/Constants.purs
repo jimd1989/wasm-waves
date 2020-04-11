@@ -14,7 +14,7 @@ type Constant = {
 
 constants ∷ Array Constant
 constants = [
-  {name: "x", body: [getLocal, 0]},
+  {name: "x", body: [getLocal, 1]},
   {name: "e", body: f32const : toBytes(e)},
   {name: "pi", body: f32const : toBytes(pi)},
   {name: "tau", body: f32const : toBytes(tau)}

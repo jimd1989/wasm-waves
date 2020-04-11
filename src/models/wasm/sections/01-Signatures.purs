@@ -8,7 +8,7 @@ id ∷ Byte
 id = 1
 
 signature ∷ Bytes
-signature = [function, 1, f32, 1, f32]
+signature = [function, 1, f32, 0]
 
 signatures ∷ Bytes
 signatures = header id [signature]

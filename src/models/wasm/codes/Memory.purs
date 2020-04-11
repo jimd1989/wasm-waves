@@ -1,6 +1,6 @@
 module Models.Wasm.Codes.Memory where
 
-import Helpers.Types (Byte)
+import Helpers.Types (Byte, Bytes)
 
 getLocal ∷ Byte
 getLocal = 32
@@ -23,3 +23,6 @@ f32load = 42
 f32store ∷ Byte
 f32store = 56
 
+-- Still don't understand this tbh; used when storing to an address
+offset ∷ Bytes
+offset = [2, 0]

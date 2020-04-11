@@ -38,5 +38,11 @@ gt = 94
 ge ∷ Byte
 ge = 96
 
+trunc ∷ Byte
+trunc = 143
+
 i32ltu ∷ Byte
 i32ltu = 73
+
+i32add ∷ Byte
+i32add = 106 
