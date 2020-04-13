@@ -29,8 +29,8 @@
   f32.sub
   f32.const 3.0912
   f32.mul
-  f32.const 3.14159265359
-  f32.div
+  f32.const 0.31830988618
+  f32.mul
   f32.sub
   )
   (func $f (param $inc f32)
