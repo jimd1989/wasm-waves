@@ -2,6 +2,37 @@
   (global $len i32 (i32.const 3840))
   (global $phase (mut f32) (f32.const 0))
   (memory $mem 1 1)
+  (func $sin (param $x f32) (result f32)
+  get_local $x
+  get_local $x
+  get_local $x
+  get_local $x
+  get_local $x
+  f32.const -0.00543
+  f32.mul
+  f32.const 0.08543
+  f32.add
+  f32.mul
+  f32.const -0.38369
+  f32.add
+  f32.mul
+  f32.const 0.24319
+  f32.add
+  f32.mul
+  f32.const 1.88512
+  f32.add
+  f32.mul
+  f32.const -3.083768
+  f32.add
+  get_local $x
+  f32.const 3.14159265359
+  f32.sub
+  f32.const 3.0912
+  f32.mul
+  f32.const 3.14159265359
+  f32.div
+  f32.sub
+  )
   (func $f (param $inc f32)
     (local $p f32) (local $n i32)
   get_global $phase
@@ -44,6 +75,7 @@
   get_local $p
   set_global $phase
   )
+  (export "sin" (func $sin))
   (export "f" (func $f))
   (export "memory" (memory $mem))
 )
