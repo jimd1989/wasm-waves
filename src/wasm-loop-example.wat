@@ -4,9 +4,9 @@
   (memory $mem 1 1)
   (func $sin (param $x f32) (result f32)
     get_local $x
-    f32.const 3.14159265359
+    f32.const 3.141592653589793
     f32.sub
-    f32.const 0.31830988618
+    f32.const 0.318309886183791
     f32.mul
     tee_local $x
     get_local $x
