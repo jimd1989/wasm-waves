@@ -8,8 +8,6 @@ The function `wasm` in `Main` can parse an s-expression for a function `f(x)`, w
 
 Representing `f(x) = sin(x)` would involve the following session.
 
-Representing `f(x) = x²` would involve the following session.
-
 ```
 $ pulp repl
 PSCi, version 0.13.6
