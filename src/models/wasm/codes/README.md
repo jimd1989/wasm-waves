@@ -10,6 +10,10 @@ Global and local variables in wasm are referred to internally as offsets. Variab
 
 Opcodes for looping and branching instructions.
 
+## Memory.purs
+
+Opcodes for reading/writing values from memory.
+
 ## Operations.purs
 
 Opcodes for general instructions, such as arithmetic and comparisons.

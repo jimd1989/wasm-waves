@@ -1,13 +1,18 @@
 module Models.Signatures where
 
-import Prelude (($), flip, join)
+import Prelude (($), flip, join, negate)
 import Data.Bifunctor (bimap)
 import Data.Either (Either)
 import Data.Tuple (Tuple(..))
+import Math (pi)
+import Foreign.Numbers (toBytes)
 import Helpers.Types (Bytes)
 import Models.Parameters (ParameterCount(..), extract)
+import Models.Wasm.Codes.Addresses (rf1)
 import Models.Wasm.Codes.Control (if', else', end)
-import Models.Wasm.Codes.Operations (add, div, eq, ge, gt, le, lt, mul, ne,sub)
+import Models.Wasm.Codes.Memory (getLocal, teeLocal)
+import Models.Wasm.Codes.Operations (f32const, add, div, eq, ge, gt, 
+                                     le, lt, mul, ne,sub)
 import Models.Wasm.Codes.Types (f32)
 
 type Signature = {
@@ -39,5 +44,26 @@ signatures = [
   {name: "<=", args: Fixed 2, slots: [0,1], body: [e, e, [le]]},
   {name: ">=", args: Fixed 2, slots: [0,1], body: [e, e, [ge]]},
   {name: "?", args: Fixed 3, slots: [0,2,4],
-   body: [e, [if', f32], e, [else'], e, [end]]} 
+   body: [e, [if', f32], e, [else'], e, [end]]},
+  {name: "sin", args: Fixed 1, slots: [0],
+   body: [e,
+         [f32const], toBytes(pi),
+         [sub,
+          f32const], toBytes(0.318309886183791),
+         [mul,
+          teeLocal, rf1,
+          getLocal, rf1,
+          getLocal, rf1,
+          getLocal, rf1,
+          getLocal, rf1,
+          f32const], toBytes(-1.66451778959003),
+         [mul,
+          mul,
+          f32const], toBytes(4.74829052566064),
+         [add,
+          mul,
+          mul,
+          f32const], toBytes(-3.09012486790893),
+         [add,
+          mul]]}
 ]
