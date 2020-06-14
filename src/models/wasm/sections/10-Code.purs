@@ -12,10 +12,10 @@ id ∷ Byte
 id = 10
 
 localFloats ∷ Bytes
-localFloats = [1, f32]
+localFloats = [3, f32]
 
 localInts ∷ Bytes
-localInts = [1, i32]
+localInts = [3, i32]
 
 localVars ∷ Bytes
 localVars = join [[2], localFloats, localInts]

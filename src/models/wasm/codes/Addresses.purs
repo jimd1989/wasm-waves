@@ -11,5 +11,17 @@ pitch = 0
 phase ∷ Byte
 phase = 1
 
+rf1 ∷ Byte
+rf1 = 2
+
+rf2 ∷ Byte
+rf2 = 3
+
 n ∷ Byte
-n = 2
+n = 4
+
+ri1 ∷ Byte
+ri1 = 5
+
+ri2 ∷ Byte
+ri2 = 6

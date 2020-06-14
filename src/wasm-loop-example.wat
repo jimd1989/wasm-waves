@@ -25,7 +25,8 @@
     f32.mul
   )
   (func $f (param $inc f32)
-    (local $p f32) (local $n i32)
+    (local $p f32) (local $rf1 f32) (local $rf2 f32)
+    (local $n i32) (local $ri1 i32) (local $ri2 i32)    
   get_global $phase
   set_local $p
   i32.const 0
